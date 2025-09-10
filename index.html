@@ -87,6 +87,17 @@
             z-index: 2;
         }
 
+        .profile-photo img {
+            width: 194px;
+            height: 194px;
+            object-fit: cover;
+            border-radius: 50%;
+            z-index: 2;
+            position: absolute;
+            top: 3px;
+            left: 3px;
+        }
+
         .name-title {
             text-align: center;
             margin-bottom: 30px;
@@ -277,6 +288,72 @@
             margin: 0 3px;
         }
 
+        .heart {
+            position: fixed;
+            font-size: 20px;
+            animation: flyUp 3s ease-out forwards;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        @keyframes flyUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(0.5);
+            }
+        }
+
+        .sparkle {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: #ffd700;
+            border-radius: 50%;
+            animation: sparkleAnim 2s ease-out forwards;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        @keyframes sparkleAnim {
+            0% {
+                opacity: 1;
+                transform: scale(0) rotate(0deg);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1) rotate(180deg);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0) rotate(360deg);
+            }
+        }
+
+        .code-symbol {
+            position: fixed;
+            font-family: 'Courier New', monospace;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 14px;
+            animation: floatUp 4s linear forwards;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100vh);
+            }
+        }
+
         @media (max-width: 768px) {
             .main-name {
                 font-size: 2rem;
@@ -312,7 +389,7 @@
     <div class="container">
         <div class="profile-section">
             <div class="profile-photo">
-                <img src="368a618e-dd2a-4436-822a-63d3af4447e0.jpg" alt="Foto Saskia">
+               <img src="368a618e-dd2a-4436-822a-63d3af4447e0.jpg" alt="Saskia Ananda Putri">
                 <i class="fas fa-user"></i>
             </div>
             
@@ -389,32 +466,6 @@
         // Create new floating elements periodically
         setInterval(createFloatingElement, 1000);
 
-        // Cute Robot Click Handler
-        const robot = document.getElementById('cuteRobot');
-        robot.addEventListener('click', function() {
-            // Create flying hearts
-            for (let i = 0; i < 5; i++) {
-                setTimeout(() => {
-                    createHeart(robot);
-                }, i * 200);
-            }
-            
-            // Create sparkles
-            for (let i = 0; i < 8; i++) {
-                setTimeout(() => {
-                    createSparkle(robot);
-                }, i * 100);
-            }
-            
-            // Robot celebration dance
-            robot.style.animation = 'none';
-            robot.style.transform = 'scale(1.2) rotate(360deg)';
-            setTimeout(() => {
-                robot.style.animation = 'bounce 2s infinite';
-                robot.style.transform = '';
-            }, 600);
-        });
-
         // Create Flying Hearts
         function createHeart(source) {
             const heart = document.createElement('div');
@@ -486,28 +537,6 @@
                 }
             }, 100);
         });
-
-        // Random robot expressions
-        setInterval(() => {
-            const eyes = document.querySelectorAll('.robot-eye');
-            const expressions = [
-                { width: '6px', height: '6px', borderRadius: '50%' }, // normal
-                { width: '8px', height: '4px', borderRadius: '50%' }, // sleepy
-                { width: '4px', height: '8px', borderRadius: '50%' }, // surprised
-                { width: '6px', height: '2px', borderRadius: '3px' }  // happy
-            ];
-            
-            const expression = expressions[Math.floor(Math.random() * expressions.length)];
-            eyes.forEach(eye => {
-                Object.assign(eye.style, expression);
-            });
-            
-            setTimeout(() => {
-                eyes.forEach(eye => {
-                    Object.assign(eye.style, expressions[0]); // back to normal
-                });
-            }, 1500);
-        }, 8000);
 
         // Profile photo hover creates hearts
         const profilePhoto = document.querySelector('.profile-photo');
